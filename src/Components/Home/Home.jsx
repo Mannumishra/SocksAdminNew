@@ -65,7 +65,7 @@ const Home = () => {
           <Route path={"/add-voucher"} element={<CreateVoucher />} />
 
           {/* --- Tags --- */}
-          <Route path={"/all-tags"} element={<AllTags />} />
+          <Route path={"/all-query"} element={<AllTags />} />
           <Route path={"/add-tag"} element={<AddTag />} />
           <Route path={"/edit-tag/:id"} element={<EditTag />} />
 
@@ -81,7 +81,7 @@ const Home = () => {
 
           {/* --- Orders --- */}
           <Route path={"/all-orders"} element={<AllOrder />} />
-          <Route path={"/edit-order/:id"} element={<EditOrder />} />
+          <Route path={"/edit-order/:_id"} element={<EditOrder />} />
         </Routes>
       </div>
     </>

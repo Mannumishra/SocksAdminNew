@@ -30,7 +30,7 @@ const Trainding = () => {
             formData.append("traindingName", data.traindingName);
             formData.append("image", data.image);
 
-            const res = await axios.post("https://socksserver-1udn.onrender.com/api/bestseller", formData);
+            const res = await axios.post("http://localhost:8000/api/bestseller", formData);
             console.log(res);
             if (res.status === 200) {
                 toast.success("Best Seller Product created successfully");

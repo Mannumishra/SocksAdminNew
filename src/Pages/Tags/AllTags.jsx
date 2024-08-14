@@ -6,6 +6,24 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AllTags = () => {
+    const [data, setData] = useState([])
+
+    const getApiData = async () => {
+        try {
+            const res = await axios.get("http://localhost:8000/api/contact")
+            console.log(res)
+            if (res.status === 200) {
+                const newData = res.data.data
+                setData(newData.reverse())
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        getApiData()
+    }, [data.length])
+
     return (
         <>
             <ToastContainer />
@@ -37,19 +55,25 @@ const AllTags = () => {
                         <tr>
                             <th scope="col">Sr.No.</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Color</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Message</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                            <tr >
-                                <th scope="row"></th>
-                                <td><div className="circle-color" ></div></td>
-                                <td><div className="circle-color" ></div></td>
-                                <td><Link  className="bt edit">Edit <i class="fa-solid fa-pen-to-square"></i></Link></td>
-                                <td><Link  className="bt delete">Delete <i class="fa-solid fa-trash"></i></Link></td>
-                            </tr>
+                        {
+                            data.map((item, index) =>
+                                <tr key={index}>
+                                    <th scope="row">{index+1}</th>
+                                    <td>{item.name}</td>
+                                    <td>{item.email}</td>
+                                    <td>{item.phone}</td>
+                                    <td>{item.message}</td>
+                                    <td>{new Date(item.createdAt).toDateString()}</td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
             </section>

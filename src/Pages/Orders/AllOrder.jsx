@@ -6,6 +6,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AllOrder = () => {
+    const [data, setData] = useState([])
+    // const navigate = useNavigate()
+    const getApiData = async () => {
+        try {
+            let res = await axios.get("http://localhost:8000/api/checkout")
+            console.log(res)
+            setData(res.data.data)
+        } catch (error) { }
+    }
+    useEffect(() => {
+        getApiData()
+    }, [])
     return (
         <>
             <ToastContainer />
@@ -43,42 +55,31 @@ const AllOrder = () => {
                 <table className="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Sr.No.</th>
-                            <th scope="col">Order ID</th>
-                            <th scope="col">Items</th>
-                            <th scope="col">Final Price</th>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Payment Mode</th>
-                            <th scope="col">Payment Status</th>
-                            <th scope="col">Order Date</th>
-                            <th scope="col">Actions</th>
+                            <th>S No.</th>
+                            <th scope='col'>Order Id</th>
+                            <th scope='col'>Order Status</th>
+                            <th scope='col'>Payment Mode</th>
+                            <th scope='col'>Payment Status</th>
+                            <th scope='col'>Total</th>
+                            <th scope='col'>Date</th>
+                            <th scope='col'></th>
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>
-                                    <Link></Link>
-                                </td>
-                                <td>
-                                        <div>
-                                            <strong></strong><br />
-                                            SKU: <br />
-                                            Quantity: <br />
-                                            Price: 
-                                        </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <Link  className="bt delete">
-                                        Delete <i className="fa-solid fa-trash"></i>
-                                    </Link>
-                                </td>
-                            </tr>
+                        {
+                            data.reverse().map((item, index) => {
+                                return <tr key={index}>
+                                    <th>{index + 1}</th>
+                                    <td>{item._id}</td>
+                                    <td>{item.orderstatus}</td>
+                                    <td>{item.paymentmode}</td>
+                                    <td>{item.paymentstatus}</td>
+                                    <td>&#8377;{item.total}</td>
+                                    <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                                    <td><Link to={`/edit-order/${item._id}`}><i className='fa fa-eye text-success'></i></Link></td>
+                                </tr>
+                            })
+                        }
                     </tbody>
                 </table>
             </section>

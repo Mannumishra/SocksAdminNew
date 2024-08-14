@@ -30,7 +30,7 @@ const AddCategory = () => {
         e.preventDefault();
         setLoading(true); // Start loading state
         try {
-            let res = await axios.post("https://socksserver-1udn.onrender.com/api/category", newdata);
+            let res = await axios.post("http://localhost:8000/api/category", newdata);
             if (res.status === 200) {
                 toast.success("Product Category is created");
                 navigate("/all-category");
